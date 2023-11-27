@@ -1,0 +1,51 @@
+<div class="container">
+    <h3>Employee Details</h3>
+</div>
+<div class="container">
+    <div class="alert alert-warning" *ngIf="empForm.dirty && empForm.invalid">Enter valid values</div>
+    <form (ngSubmit)="!empForm.invalid && saveEmp()" #empForm = "ngForm">
+    <fieldset>
+        <label>First Name</label>
+        <input type="text" class="form-control" name="firstName" required="required" [(ngModel)] ="employee.firstName">
+    </fieldset>
+    <fieldset>
+        <label>Last Name</label>
+        <input type="text" class="form-control" name="lastName" required="required" [(ngModel)] ="employee.lastName">
+    </fieldset>
+    <fieldset>
+        <label>DOB</label>
+        <input type="Date" class="form-control" name="dob" required="required"
+         [ngModel] ="employee.dob | date:'yyyy-MM-dd'"
+         (ngModelChange)="employee.dob = $event">
+    </fieldset>
+    <fieldset>
+        <label>Department</label>
+        <!--<input type="text" class="form-control" name="department" required="required" [(ngModel)] ="employee.department">-->
+        <select class="form-control" required="required" [(ngModel)]="selectedOption" name="department" >
+            <option value="" selected disabled hidden>Select Department</option>
+            <option *ngFor="let o of departments">
+               {{o.name}}
+            </option>
+         </select>
+    </fieldset>
+    <fieldset>
+        <label>Salary</label>
+        <input type="number" class="form-control" min="20000" max = "999999" name="salary" required="required" [(ngModel)] ="employee.salary">
+    </fieldset>
+    <fieldset>
+        <label>Manager</label>
+        <!--<input type="text" class="form-control" name="manager" required="required" [(ngModel)] ="employee.manager">-->
+
+        <select class="form-control" [(ngModel)]="managerOption" name="managers" >
+            <option value="" selected disabled hidden>Select Manager</option>
+            <option *ngFor="let o of managers" [ngValue]='o.firstName +" "+ o.lastName '>
+               {{o.firstName}} {{o.lastName}}
+            </option>
+        </select>
+    </fieldset>
+    <br>
+    <button type ="submit" class="btn btn-success">Submit</button>
+    &nbsp;
+    <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+</form>
+</div>
