@@ -16,7 +16,14 @@ public class EmployeeService {
 	private EmployeeRepository empRepo;
 	
 	public Employee saveEmp(Employee e) {
-		Employee emp = empRepo.save(e);
+		LocalDate currentDate = LocalDate.now();
+		Integer age = Period.between(e.getDob(), currentDate).getYears();
+		Employee emp = null;
+		if(age>=18) {
+			emp = empRepo.save(e);
+		}else {
+			throw new RuntimeException("Employee Age is below 18");
+		}
 		return emp;
 	} 
 	
